@@ -1,7 +1,13 @@
 const express = require("express");
 const router = express.Router();
+const bodyparser = require("body-parser")
 const Usercontrol = require("../controller/index");
+router.use(bodyparser.json());
 
-router.post("./login", Usercontrol.require)
+router.post("/login", Usercontrol.require)
 
-module.exports = {router};
+router.get("/login", async(req,res)=>{
+    res.send("Get Login Work");
+})
+
+module.exports = router;

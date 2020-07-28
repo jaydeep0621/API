@@ -9,10 +9,11 @@ const app = express();
 
 const port = process.env.port||3030;
 app.use(helmet());
-app.use(bodyparser);
-app.use("/data", routes);
+app.disable('x-powered-by');
+app.use(bodyparser.json());
+app.use("data", routes);
 
-app.get("/new", function(req,res){
+app.get("/", function(req,res){
     res.send("OK");
 })
 

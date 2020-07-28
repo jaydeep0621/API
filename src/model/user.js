@@ -1,5 +1,4 @@
 //DataBase Schema
-
 const mongoose = require("mongoose");
 
 const user = new mongoose.Schema ({
@@ -16,7 +15,6 @@ const user = new mongoose.Schema ({
         required: true
     }
 })
-
 
 //export Database Schema
 module.exports = mongoose.model("User",user);
