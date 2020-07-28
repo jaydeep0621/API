@@ -6,13 +6,14 @@ const user = new mongoose.Schema ({
         type: String,
         required: true
     },
-    email:{
+    dob:{
         required : true,
         type: String
     },
     phone:{
         type: String,
-        required: true
+        required: true,
+        unique: true
     }
 })
 

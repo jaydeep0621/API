@@ -12,11 +12,15 @@ module.exports = {
         try{
         const User = new user(req.body);
         User.name = req.body.name;
+        User.dob =  req.body.dob;
+        User.phone = req.body.phone;
+        console.log("Name is :",User.name);
+        console.log("Date of Birth is :",User.dob);
+        console.log("Phone Number is :",User.phone);
         await User.save();
         res.send(User);
-        }
-        catch(err){
-            console.log("Error is:", +err);
+        } catch(err){
+            console.log("Error is:", err);
         }
     }
 }

@@ -11,12 +11,12 @@ const port = process.env.port||3030;
 app.use(helmet());
 app.disable('x-powered-by');
 app.use(bodyparser.json());
-app.use("data", routes);
+app.use("/data", routes);
 
 app.get("/", function(req,res){
     res.send("OK");
 })
 
 app.listen(port,()=>{
-    console.log(`Conntected at port ${port}`);
+    console.log(`Connected at port ${port}`);
 })
