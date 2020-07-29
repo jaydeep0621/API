@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const async = require("async");
+const i18n = require("i18n");
 const user = require("../model/user");
 const bodyparser = require("body-parser");
 router.use(bodyparser.json());
@@ -14,11 +15,19 @@ module.exports = {
         User.name = req.body.name;
         User.dob =  req.body.dob;
         User.phone = req.body.phone;
-        console.log("Name is :",User.name);
-        console.log("Date of Birth is :",User.dob);
-        console.log("Phone Number is :",User.phone);
-        await User.save();
-        res.send(User);
+
+        //to check phone number validity
+        await User.save((err,data)=>{
+            if(data){
+                console.log("Your Data has been successfully saved");
+                console.log(User);
+                res.send(User);
+            }
+            else{
+                console.log("Phone Number Already Registered");
+                res.send("Already Registered");            
+            }
+        });
         } catch(err){
             console.log("Error is:", err);
         }
