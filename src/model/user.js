@@ -13,7 +13,26 @@ const user = new mongoose.Schema ({
     phone:{
         type: String,
         required: true,
-        unique: true
+    }
+})
+user.static({
+    getUserList(reqobj, sort){
+
+        return this.aggregate([{
+            $match: {isDeleted: false}
+        }])
+
+    },
+    existPhoneCheck(phone){
+        return this.findOne({ phone: phone});
+      },
+
+    UpdateById(reqobj){
+      return this.findOneAndUpdate({
+               _id:reqobj._id
+      },{
+          $set: reqobj
+      })
     }
 })
 
