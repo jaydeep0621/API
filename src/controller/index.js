@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const async = require("async");
 const i18n = require("i18n");
+const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const user = require("../model/user");
 const bodyparser = require("body-parser");
@@ -16,18 +17,26 @@ module.exports = {
         const getUserByPhoneResponse = await user.existPhoneCheck(User.phone);
         if (getUserByPhoneResponse) {
           const err = {};
-          res.send("PHONE_ALREADY_EXISTS");
-        }
-        let registerUserResponse = await User.save();
-        registerUserResponse = registerUserResponse.toObject();
+          res.send("Phone Number Already Exist");
+          console.log("User Already Registered");
+        }else{
+            let registeruser = await User.save();
+            registeruser = registeruser.toObject();
 
+            const token = jwt.sign({
+                id:registeruser["_id"],
+                name:registeruser["name"]
+            })
+            console.log(token);
+            res.send("Succesffuly Registered");
+            console.log("User Deatils is:", User);
+        }
     }catch(err){
         console.log("Error is:", err);
     }
 },
-
 //Update User
- 
+
 edit: async (req,res)=>{
     try{
         const User = new user(req.body);
