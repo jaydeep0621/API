@@ -13,6 +13,7 @@ const user = new mongoose.Schema ({
     phone:{
         type: String,
         required: true,
+        unique: true
     }
 })
 user.static({

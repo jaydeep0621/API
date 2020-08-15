@@ -21,13 +21,12 @@ module.exports = {
           console.log("User Already Registered");
         }else{
             let registeruser = await User.save();
-            registeruser = registeruser.toObject();
-
+            /*registeruser = registeruser.toObject();
             const token = jwt.sign({
                 id:registeruser["_id"],
                 name:registeruser["name"]
-            })
-            console.log(token);
+            }, AppConfig.JWTSECRET)
+            console.log(token);*/
             res.send("Succesffuly Registered");
             console.log("User Deatils is:", User);
         }
