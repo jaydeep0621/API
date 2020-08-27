@@ -15,23 +15,25 @@ module.exports = {
         try{
         const User = new user(req.body);
         const getUserByPhoneResponse = await user.existPhoneCheck(User.phone);
+        const getUserByEmailResponse = await user.existEmailCheck(User.email);
         if (getUserByPhoneResponse) {
           const err = {};
           res.send("Phone Number Already Exist");
-          console.log("User Already Registered");
-        }else{
-            let registeruser = await User.save();
-            registeruser = registeruser.toObject();
-            const token = jwt.sign({
-                id:registeruser["_id"],
-                name:registeruser["name"]
-            }, AppConfig.JWTSECRET);
-            registeruser["token"] = token;
-            console.log(token);
+          console.log("User Already Registered with Phone Number");
+        }
+
+        if(getUserByEmailResponse){
+            const err = {};
+            err.resMsg = i18n.__("Email_Already Exist")
+            console.log("User Already Registered with Email Id");
+            return next(err);
+        }
+
+            await User.save();
             res.send("Succesffuly Registered");
             console.log("User Deatils is:", User);
-        }
-    }catch(err){
+    }
+    catch(err){
         console.log("Error is:", err);
     }
 },
