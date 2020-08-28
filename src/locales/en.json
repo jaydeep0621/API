@@ -1,0 +1,8 @@
+{
+    "responsestatus":{
+        "ERROR":"error",
+        "FAILURE":"fail"
+    },
+
+    "EMAIL_ALREADY_EXIST":"Email ID Already Exist"
+}

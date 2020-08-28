@@ -21,14 +21,13 @@ module.exports = {
           res.send("Phone Number Already Exist");
           console.log("User Already Registered with Phone Number");
         }
-
         if(getUserByEmailResponse){
             const err = {};
-            err.resMsg = i18n.__("Email_Already Exist")
+            err.resMsg = i18n.__("EMAIL_ALREADY_EXIST");
+            err.resCode = i18n.__("responsestatus.ERROR")
             console.log("User Already Registered with Email Id");
             return next(err);
         }
-
             await User.save();
             res.send("Succesffuly Registered");
             console.log("User Deatils is:", User);
