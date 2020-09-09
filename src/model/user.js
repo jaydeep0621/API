@@ -33,9 +33,8 @@ user.static({
         return this.findOne({ phone: phone});
       },
 
-      existEmailCheck(email){
+    existEmailCheck(email){
           return this.findOne({ email: email});
-
       },
     UpdateById(reqobj){
       return this.findOneAndUpdate({

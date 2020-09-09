@@ -9,9 +9,8 @@ const bodyparser = require("body-parser");
 router.use(bodyparser.json());
 const mongoose = require("mongoose");
 
-
 module.exports = {
-    require: async (req,res, next)=>{
+    require: async (req, res, next)=>{
         try{
         const User = new user(req.body);
         const getUserByPhoneResponse = await user.existPhoneCheck(User.phone);
@@ -23,14 +22,23 @@ module.exports = {
         }
         if(getUserByEmailResponse){
             const err = {};
-            err.resMsg = i18n.__("EMAIL_ALREADY_EXIST");
-            err.resCode = i18n.__("responsestatus.ERROR")
+            err.resmsg = i18n.__("EMAIL_ALREADY_EXIST");
+            err.rescode = i18n.__("responsestatus.ERROR");
             console.log("User Already Registered with Email Id");
-            return next(err);
         }
-            await User.save();
+        let 
+        registerUserResponse = await User.save();
+        registerUserResponse = registerUserResponse.toObject();
+
+            const token = jwt.sign({
+                id: registerUserResponse["_id"],
+                email: registerUserResponse["email"],
+                name: registerUserResponse["name"]
+            }, "Secret");
+            registerUserResponse["token"] = token;
+
             res.send("Succesffuly Registered");
-            console.log("User Deatils is:", User);
+            console.log("User Details is:", User);
     }
     catch(err){
         console.log("Error is:", err);
@@ -43,7 +51,6 @@ edit: async (req,res)=>{
         const User = new user(req.body);
         User._id = req.user.id;
         console.log("User id is :", User._id);
-
     }catch(err){
         res.json("Something Went Wrong");
     }
