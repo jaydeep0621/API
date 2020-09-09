@@ -1,8 +1,8 @@
 {
-    "responsestatus":{
-        "ERROR":"error",
-        "FAILURE":"fail"
-    },
-
-    "EMAIL_ALREADY_EXIST":"Email ID Already Exist"
+	"responsestatus": {
+		"ERROR": "error",
+		"FAILURE": "fail"
+	},
+	"EMAIL_ALREADY_EXIST": "Email ID Already Exist",
+	"responsestatus.ERROR": "responsestatus.ERROR"
 }

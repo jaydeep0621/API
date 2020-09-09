@@ -11,7 +11,7 @@ const mongoose = require("mongoose");
 
 
 module.exports = {
-    require: async (req,res)=>{
+    require: async (req,res, next)=>{
         try{
         const User = new user(req.body);
         const getUserByPhoneResponse = await user.existPhoneCheck(User.phone);

@@ -5,6 +5,7 @@ const cors = require("cors");
 require("../project3/src/config/db");
 const bodyparser = require("body-parser");
 const dotenv = require("dotenv");
+const i18n = require("i18n");
 const routes = require("../project3/src/routes/index")
 
 const app = express();
@@ -15,6 +16,12 @@ app.use(helmet());
 /*app.disable('x-powered-by');*/
 app.use(bodyparser.json());
 app.use("/data", routes);
+
+//intialize i18n dependency
+i18n.configure({
+    locales: "en",
+    directory: __dirname + "/src/locales",
+  });
 
 app.use((req,res,next)=>{
     res.header("Access-Control-Allow-Origin","*");
@@ -27,6 +34,11 @@ app.get("/", function(req,res){
     res.send("OK");
 })
 
+
+
 app.listen(port,()=>{
     console.log(`Connected at port ${port}`);
 })
+
+//Export App File
+module.exports =  app;
