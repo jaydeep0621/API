@@ -26,8 +26,7 @@ module.exports = {
             err.rescode = i18n.__("responsestatus.ERROR");
             console.log("User Already Registered with Email Id");
         }
-        let 
-        registerUserResponse = await User.save();
+        let registerUserResponse = await User.save();
         registerUserResponse = registerUserResponse.toObject();
 
             const token = jwt.sign({
