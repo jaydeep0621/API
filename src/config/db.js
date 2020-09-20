@@ -1,14 +1,19 @@
 //DB Connection
-
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
 
-mongoose.connect("mongodb://localhost/user", {useNewUrlParser:true, useCreateIndex: true, useUnifiedTopology: true});
+const mongoUri = process.env.DB_URI;
 
-mongoose.connection
-.then(() => {
-    console.log("DB Successfully Connected");
-},(err)=> {
-    console.log("Error is :", err);
-})
+const options = {
+    useNewUrlParser: true, 
+    useCreateIndex: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false
+}
+
+mongoose.connect(mongoUri, options).then(() => {
+    console.log('DB connected!!');
+}, (err) => {
+    console.log('Unable to connect to database:', err)
+});

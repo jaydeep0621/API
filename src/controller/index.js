@@ -8,8 +8,24 @@ const user = require("../model/user");
 const bodyparser = require("body-parser");
 router.use(bodyparser.json());
 const mongoose = require("mongoose");
+const AppConfig = require("../config/hash.json");
 
 module.exports = {
+
+
+    passwordhash: async(phonenumber) => {
+        console.log("hereeeeeeee",typeof phonenumber)
+        try{
+        let phone = bcrypt.hashSync(phonenumber.trim(),Number(AppConfig.SALT.ROUND));
+
+        console.log("phone", phone)
+        return phone;
+        }catch(e){
+            console.log(e)
+        }
+    
+    },
+
     require: async (req, res, next)=>{
         try{
         const User = new user(req.body);
@@ -25,7 +41,13 @@ module.exports = {
             err.resmsg = i18n.__("EMAIL_ALREADY_EXIST");
             err.rescode = i18n.__("responsestatus.ERROR");
             console.log("User Already Registered with Email Id");
+
+            return next(err);
         }
+        console.log("------", User)
+
+        User.phone = await module.exports.passwordhash(User.phone);
+        console.log("------", User)
         let registerUserResponse = await User.save();
         registerUserResponse = registerUserResponse.toObject();
 
